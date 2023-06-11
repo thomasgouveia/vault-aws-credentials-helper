@@ -1,0 +1,1 @@
+# Vault AWS credentials helper
