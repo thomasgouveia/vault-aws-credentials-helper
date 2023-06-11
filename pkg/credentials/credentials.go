@@ -52,6 +52,7 @@ var authStrategies = map[string]vaultLoginStrategy{
 
 var (
 	ErrUnknownAuthMethod = errors.New("unknown auth method")
+	ErrVaultRoleEmpty    = errors.New("the vault role must not be empty")
 )
 
 type FetchCredentialConfig struct {
@@ -69,6 +70,11 @@ type FetchCredentialConfig struct {
 // on the underlying AWS secret engine.
 func Fetch(cmd *cobra.Command, client *vault.Client, cfg *FetchCredentialConfig) (*AWSCredentials, error) {
 	ctx := cmd.Context()
+
+	// Ensure the user has given a Vault role
+	if cfg.Role == "" {
+		return nil, ErrVaultRoleEmpty
+	}
 
 	strategy, ok := authStrategies[cfg.AuthMethod]
 	if !ok {

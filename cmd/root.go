@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"time"
@@ -38,12 +39,15 @@ var rootCmd = &cobra.Command{
 			TTL:        awsTtl,
 		}
 
-		credentials, err := credentials.Fetch(cmd, client, cfg)
+		creds, err := credentials.Fetch(cmd, client, cfg)
 		if err != nil {
+			if errors.Is(err, credentials.ErrVaultRoleEmpty) {
+				return fmt.Errorf("you must provide a Vault role configured in your AWS backend to generate credentials using --aws.role")
+			}
 			return err
 		}
 
-		by, err := json.MarshalIndent(credentials, "", " ")
+		by, err := json.MarshalIndent(creds, "", " ")
 		if err != nil {
 			return err
 		}
