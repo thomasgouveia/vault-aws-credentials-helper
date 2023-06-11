@@ -1,8 +1,6 @@
 # Vault AWS Credentials Helper
 
-`vault-aws-credentials-helper` is a simple CLI tool that provides the ability to generate dynamic AWS credentials using the [HashiCorp Vault's AWS secret engine](https://developer.hashicorp.com/vault/docs/secrets/aws). 
-
-You can configure your AWS CLI to use it to retrieve dynamic and short-lived credentials from the Vault AWS engine. **Short-lived credentials enforce security and reduce the risk of a credential leak or corruption**. 
+`vault-aws-credentials-helper` is a simple CLI tool that provides the ability to generate dynamic AWS credentials using the [HashiCorp Vault's AWS secret engine](https://developer.hashicorp.com/vault/docs/secrets/aws) and integrate seamlessly with the AWS CLI to retrieve dynamic and short-lived credentials. **Short-lived credentials enforce security and reduce the risk of a credential leak or corruption**. 
 
 To learn more about how the credentials are provided to the AWS CLI, please refer to the official AWS documentation: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html.
 
