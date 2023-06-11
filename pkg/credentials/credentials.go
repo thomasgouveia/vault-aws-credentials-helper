@@ -46,6 +46,7 @@ type vaultLoginStrategy interface {
 // authStrategies maps the strategy implementation with the name of the
 // authentication method to be used.
 var authStrategies = map[string]vaultLoginStrategy{
+	"token":    &tokenStrategy{},
 	"userpass": &userpassStrategy{},
 }
 
