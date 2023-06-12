@@ -1,4 +1,4 @@
-package credentials
+package vaultauth
 
 import (
 	"context"
@@ -10,7 +10,7 @@ type tokenStrategy struct {
 	Token string `flag.name:"token" flag.desc:"The token to use to authenticate with Vault. Do not use this authentication method in production."`
 }
 
-// Ensure the implementation satisfies the interface
+// Ensure the implementation satisfies the interface.
 var (
 	_ vaultLoginStrategy = &tokenStrategy{}
 )
@@ -23,7 +23,5 @@ func (s *tokenStrategy) login(ctx context.Context, client *vault.Client) (*vault
 	//
 	// This authentication method is only available for development and
 	// testing purposes and MUST not be used in production.
-	return &vault.ResponseAuth{
-		ClientToken: s.Token,
-	}, nil
+	return &vault.ResponseAuth{ClientToken: s.Token}, nil
 }

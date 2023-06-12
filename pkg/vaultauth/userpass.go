@@ -1,4 +1,4 @@
-package credentials
+package vaultauth
 
 import (
 	"context"
@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	ErrUsernameMustNotBeEmpty = errors.New("credentials/userpass: username must not be empty")
-	ErrPasswordMustNotBeEmpty = errors.New("credentials/userpass: password must not be empty")
+	ErrUsernameMustNotBeEmpty = errors.New("vault/auth/userpass: username must not be empty")
+	ErrPasswordMustNotBeEmpty = errors.New("vault/auth/userpass: password must not be empty")
 )
 
 // userpassStrategy defines the configuration that should be attached
@@ -21,7 +21,7 @@ type userpassStrategy struct {
 	Password  string `flag.name:"userpass.password" flag.desc:"The password of the user to perform login."`
 }
 
-// Ensure the implementation satisfies the interface
+// Ensure the implementation satisfies the interface.
 var (
 	_ vaultLoginStrategy = &userpassStrategy{}
 )

@@ -45,7 +45,7 @@ func MapStructToCommandFlags[T interface{}](cmd *cobra.Command, v *T) error {
 	return nil
 }
 
-// MapStructToCommandFlags
+// MapStructToCommandFlags.
 func MapCommandFlagsToStruct[T interface{}](cmd *cobra.Command, v *T) error {
 	typeOf := reflect.ValueOf(*v).Elem().Type()
 	valueOf := reflect.ValueOf(*v)

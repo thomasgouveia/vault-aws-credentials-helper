@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -9,7 +8,8 @@ import (
 
 	"github.com/hashicorp/vault-client-go"
 	"github.com/spf13/cobra"
-	"github.com/thomasgouveia/vault-aws-credentials-helper/pkg/credentials"
+	"github.com/thomasgouveia/vault-aws-credentials-helper/pkg/resolver"
+	"github.com/thomasgouveia/vault-aws-credentials-helper/pkg/vaultauth"
 )
 
 var rootCmd = &cobra.Command{
@@ -31,28 +31,33 @@ var rootCmd = &cobra.Command{
 			return err
 		}
 
-		// Fetch authentication credentials
-		cfg := &credentials.FetchCredentialConfig{
-			AuthMethod: vaultAuthMethod,
-			MountPath:  awsMountPath,
-			Role:       awsRole,
-			TTL:        awsTtl,
+		// Define options for resolving credentials
+		resolveOpts := []resolver.ResolveOption{
+			resolver.WithCommand(cmd),
+			resolver.WithClient(client),
+			resolver.WithAuthMethod(vaultauth.AuthMethod(vaultAuthMethod)),
+			resolver.WithMountPath(awsMountPath),
+			resolver.WithRole(awsRole),
+			resolver.WithTTL(awsTtl),
 		}
 
-		creds, err := credentials.Fetch(cmd, client, cfg)
+		// Login to Vault, and then issue the credentials
+		// by calling the correct endpoint depending on
+		// the given options.
+		creds, err := resolver.ResolveCredentials(resolveOpts...)
 		if err != nil {
-			if errors.Is(err, credentials.ErrVaultRoleEmpty) {
+			if errors.Is(err, resolver.ErrVaultRoleEmpty) {
 				return fmt.Errorf("you must provide a Vault role configured in your AWS backend to generate credentials using --aws.role")
 			}
 			return err
 		}
 
-		by, err := json.MarshalIndent(creds, "", " ")
+		out, err := creds.JSONString()
 		if err != nil {
 			return err
 		}
 
-		fmt.Println(string(by))
+		fmt.Println(out)
 		return nil
 	},
 }
@@ -67,8 +72,10 @@ func init() {
 	rootCmd.PersistentFlags().String("aws.role", "", "The name of the Vault role to use to generate credentials on the AWS backend.")
 	rootCmd.PersistentFlags().String("aws.ttl", "15m", "The TTL of the Vault lease for the AWS generated credentials.")
 
-	// Authentication methods flags
-	credentials.ConfigureAuthFlags(rootCmd)
+	// Bind authentication methods flags
+	if err := vaultauth.MapAuthMethodsConfigToCommandFlags(rootCmd); err != nil {
+		panic(err)
+	}
 }
 
 // This is called by main.main(). It only needs to happen once to the rootCmd.
