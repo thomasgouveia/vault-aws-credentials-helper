@@ -97,6 +97,10 @@ aws ec2 describe-instances --region eu-west-1 --profile developer
 # An error occurred (UnauthorizedOperation) when calling the DescribeInstances operation: You are not authorized to perform this operation.
 ```
 
+## Contributing
+
+Please refer to the following [CONTRIBUTING.md](./CONTRIBUTING.md) file for contribution guidelines.
+
 ## License
 
 This project is [MIT licensed](./LICENSE).
