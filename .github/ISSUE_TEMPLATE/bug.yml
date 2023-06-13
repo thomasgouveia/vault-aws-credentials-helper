@@ -1,0 +1,31 @@
+name: Bug report
+description: Report a bug
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill in this bug report.
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Description
+      description: Give a clear and concise description of your problem** to give more context to maintainers or contributors
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Describe the exact steps required to reproduce the problem** in as many details as possible
+    validations:
+      required: true
+
+  - type: textarea
+    id: versions
+    attributes:
+      label: Versions of vault, AWS CLI and vault-aws-credentials-helper
+      description: Provide the versions of the tools used to help reproduce your current environment
+    validations:
+      required: true

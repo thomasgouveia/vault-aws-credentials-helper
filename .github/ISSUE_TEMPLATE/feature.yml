@@ -1,0 +1,23 @@
+name: Feature request
+description: Request a new feature or enhancement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Please make sure this feature request hasn't been already submitted by someone by looking through other open/closed issues
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Give a clear and brief description of your suggestion so maintainers or contributors can understand what needs to be done.
+    validations:
+      required: true
+
+  - type: textarea
+    id: confirmation
+    attributes:
+      label: Do you want to work on it ?
+      description: Answer simply by yes or no
+    validations:
+      required: true
