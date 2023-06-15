@@ -16,6 +16,7 @@ type AuthMethod string
 const (
 	Token    AuthMethod = "token"
 	Userpass AuthMethod = "userpass"
+	AppRole  AuthMethod = "approle"
 )
 
 // vaultLoginStrategy defines the common interface between all the authentication
@@ -31,6 +32,7 @@ type vaultLoginStrategy interface {
 var strategies = map[AuthMethod]vaultLoginStrategy{
 	Token:    &tokenStrategy{},
 	Userpass: &userpassStrategy{},
+	AppRole:  &approleStrategy{},
 }
 
 var (
