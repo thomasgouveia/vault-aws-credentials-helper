@@ -17,13 +17,14 @@ To be able to use a secret engine in Vault, you must be able to retrieve an auth
 
 - [Token](https://developer.hashicorp.com/vault/docs/auth/token)
 - [Userpass](https://developer.hashicorp.com/vault/docs/auth/userpass)
+- [AppRole](https://developer.hashicorp.com/vault/docs/auth/approle)
 
 ## Install
 
 You can install `vault-aws-credentials-helper` easily using `go install`: 
 
 ```bash
-go install github.com/thomasgouveia/vault-aws-credentials-helper@v0.1.0 # Pin the version you want
+go install github.com/thomasgouveia/vault-aws-credentials-helper@v0.2.0 # Pin the version you want
 ```
 
 Or you can download pre-compiled binary from the [releases page](https://github.com/thomasgouveia/vault-aws-credentials-helper/releases).
